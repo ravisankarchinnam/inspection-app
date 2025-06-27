@@ -1,7 +1,7 @@
 export enum TemplateType {
-  'date',
-  'string',
-  'number',
-  'single',
-  'multi',
+  DATE = 'DATE',
+  STRING = 'STRING',
+  NUMBER = 'NUMBER',
+  SINGLE = 'SINGLE',
+  MULTI = 'MULTI',
 }

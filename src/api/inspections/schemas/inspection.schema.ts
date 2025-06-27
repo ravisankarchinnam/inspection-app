@@ -1,7 +1,9 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document, Schema as SchemaEntity, Types } from 'mongoose';
+import { Document, HydratedDocument, Types } from 'mongoose';
 
-@Schema()
+export type InspectionDocument = HydratedDocument<Inspection>;
+
+@Schema({ timestamps: true })
 export class Inspection extends Document {
   @Prop({ type: Types.ObjectId, ref: 'Property', required: true })
   propertyId: Types.ObjectId;
@@ -12,7 +14,7 @@ export class Inspection extends Document {
   @Prop([
     {
       questionId: { type: String, required: true },
-      value: { type: SchemaEntity.Types.ObjectId, required: true },
+      value: { type: Types.ObjectId, required: true },
     },
   ])
   answers: {

@@ -3,23 +3,26 @@ import {
   IsArray,
   ArrayMinSize,
   ValidateNested,
+  IsEnum,
+  IsOptional,
 } from 'class-validator';
 import { Type } from 'class-transformer';
 import { ApiProperty } from '@nestjs/swagger';
 import { TemplateType } from 'src/api/templates/enums/template-type.enum';
 
-class QuestionDto {
+export class QuestionDto {
   @IsString()
   @ApiProperty()
   text: string;
 
-  @IsString()
-  @ApiProperty()
+  @IsEnum(TemplateType)
+  @ApiProperty({ enum: TemplateType })
   type: TemplateType;
 
+  @IsOptional()
   @IsArray()
-  @ApiProperty()
-  options: string[];
+  @ApiProperty({ required: false })
+  options?: string[];
 }
 
 export class CreateTemplateDto {
@@ -31,6 +34,6 @@ export class CreateTemplateDto {
   @ArrayMinSize(1)
   @ValidateNested({ each: true })
   @Type(() => QuestionDto)
-  @ApiProperty()
+  @ApiProperty({ isArray: true, type: QuestionDto })
   questions: QuestionDto[];
 }

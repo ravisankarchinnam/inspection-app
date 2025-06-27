@@ -1,4 +1,43 @@
-import { Controller } from '@nestjs/common';
+import { Controller, Post, Get, Param, Body, Put } from '@nestjs/common';
+import { InspectionsService } from 'src/api/inspections/inspections.service';
+import { CreateInspectionDto } from 'src/api/inspections/dto/create-inspection.dto';
+import { UpdateInspectionDto } from 'src/api/inspections/dto/update-inspection.dto';
+import { ApiOperation, ApiTags } from '@nestjs/swagger';
 
 @Controller('inspections')
-export class InspectionsController {}
+@ApiTags('inspections')
+export class InspectionsController {
+  constructor(private readonly inspectionsService: InspectionsService) {}
+
+  @Post()
+  @ApiOperation({
+    summary: 'Creates inspection',
+  })
+  create(@Body() createInspectionDto: CreateInspectionDto) {
+    return this.inspectionsService.create(createInspectionDto);
+  }
+
+  @Get()
+  @ApiOperation({
+    summary: 'finds all inspections',
+  })
+  findAll() {
+    return this.inspectionsService.findAll();
+  }
+
+  @Get(':id')
+  @ApiOperation({
+    summary: 'finds the inspection by id',
+  })
+  findOne(@Param('id') id: string) {
+    return this.inspectionsService.findOne(id);
+  }
+
+  @Put(':id')
+  @ApiOperation({
+    summary: 'update the inspection by id',
+  })
+  update(@Param('id') id: string, @Body() dto: UpdateInspectionDto) {
+    return this.inspectionsService.update(id, dto);
+  }
+}

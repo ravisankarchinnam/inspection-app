@@ -1,11 +1,13 @@
+import { HydratedDocument, Types } from 'mongoose';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { HydratedDocument } from 'mongoose';
-import { TemplateType } from '../enums/template-type.enum';
+import { TemplateType } from 'src/api/templates/enums/template-type.enum';
 
 export type TemplateDocument = HydratedDocument<Template>;
 
-@Schema()
+@Schema({ _id: true, timestamps: true })
 export class Question {
+  _id: Types.ObjectId;
+
   @Prop({ required: true }) text: string;
 
   @Prop({
@@ -20,7 +22,7 @@ export class Question {
 
 export const QuestionSchema = SchemaFactory.createForClass(Question);
 
-@Schema()
+@Schema({ timestamps: true })
 export class Template {
   @Prop({ required: true })
   name: string;
