@@ -6,9 +6,11 @@ import {
   Inspection,
   InspectionSchema,
 } from 'src/api/inspections/schemas/inspection.schema';
+import { TemplatesModule } from '../templates/templates.module';
 
 @Module({
   imports: [
+    TemplatesModule,
     MongooseModule.forFeature([
       { name: Inspection.name, schema: InspectionSchema },
     ]),
