@@ -1,14 +1,21 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
-import { TemplatesModule } from './templates/templates.module';
-import { ObjectsModule } from './objects/objects.module';
-import { InspectionsModule } from './inspections/inspections.module';
-import { DatabaseModule } from './database/database.module';
+import { ConfigModule } from '@nestjs/config';
+import { TemplatesModule } from 'src/api/templates/templates.module';
+import { ObjectsModule } from 'src/api/objects/objects.module';
+import { InspectionsModule } from 'src/api/inspections/inspections.module';
+import { DatabaseModule } from 'src/database/database.module';
 
 @Module({
-  imports: [TemplatesModule, ObjectsModule, InspectionsModule, DatabaseModule],
-  controllers: [AppController],
-  providers: [AppService],
+  imports: [
+    ConfigModule.forRoot({
+      isGlobal: true,
+    }),
+    TemplatesModule,
+    ObjectsModule,
+    InspectionsModule,
+    DatabaseModule,
+  ],
+  controllers: [],
+  providers: [],
 })
 export class AppModule {}
