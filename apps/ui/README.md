@@ -47,6 +47,18 @@ A modern web UI for the Inspection App, built with **React**, **Next.js**, **Rea
 
 ### Local Development
 
+Change the working directory
+
+```bash
+cd apps/ui
+```
+
+1. Create `.env` file using .env.example and add your variables
+
+```bash
+NEXT_PUBLIC_APP_API_URL=[YOUR_BE_API_URL] #http://localhost:4000/api
+```
+
 #### Install dependencies
 
 `npm install`

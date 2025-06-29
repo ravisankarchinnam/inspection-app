@@ -35,6 +35,20 @@ A Node.js REST API for managing inspection templates, properties, and inspection
 
 #### Local Development
 
+Change the working directory
+
+```bash
+cd apps/api
+```
+
+1. Create `.env` file using .env.example and add your variables
+
+```bash
+MONGODB_URI=[YOUR_MONGODB_URI] #http://localhost:27017/gcp
+MONGODB_URI_TEST=[YOUR_MONGODB_URI_FOR_TEST] #mongodb://localhost:27017/test_gcp
+API_PORT=[YOUR_PORT] #4000
+```
+
 ##### Install dependencies
 
 ```npm install```
