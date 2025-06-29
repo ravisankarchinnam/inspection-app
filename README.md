@@ -12,7 +12,7 @@ This is a fullstack monorepo modern web UI for the Inspection App, built with **
     <a href="https://inspection-api-fk55.onrender.com/documentation" target="blank">API Demo</a>
 </p>
 
-<p align="center"><img src="../../screenshots/api/swagger.png" alt="api" /></p>
+<p align="center"><img src="screenshots/api/swagger.png" alt="api" /></p>
 
 <img width="900" src="screenshots/ui/home.png" alt="home" />
 <img width="900" src="screenshots/ui/template.png" alt="template" />
