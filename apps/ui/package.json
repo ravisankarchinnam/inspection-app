@@ -1,6 +1,7 @@
 {
   "name": "ui",
   "version": "0.1.0",
+  "description": "A modern web UI for the Inspection App, built with **React**, **Next.js**, **React Query**, and **ShadCN**. This frontend enables users to manage templates, properties, and inspections via a clean, responsive interface.",
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",

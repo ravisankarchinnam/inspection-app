@@ -1,36 +1,83 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Inspection App Frontend
+
+A modern web UI for the Inspection App, built with **React**, **Next.js**, **React Query**, and **ShadCN**. This frontend enables users to manage templates, properties, and inspections via a clean, responsive interface.
+
+<p align="center">
+    <a href="https://inspection-ui.vercel.app/" target="blank">UI Demo</a>
+</p>
+
+<img width="900" src="../../screenshots/ui/home.png" alt="home" />
+<img width="900" src="../../screenshots/ui/template.png" alt="template" />
+<img width="900" src="../../screenshots/ui/property.png" alt="property" />
+<img width="900" src="../../screenshots/ui/inspection.png" alt="inspection" />
+
+## Table of Contents
+
+- [Features](#features)
+- [Tech Stack](#tech-stack)
+- [Getting Started](#getting-started)
+- [App Structure](#app-structure)
+- [API Integration](#api-integration)
+- [Docker](#docker)
+- [Assumptions & Limitations](#assumptions--limitations)
+- [License](#license)
+
+## Features
+
+- Browse, create, and view inspection templates
+- Manage property objects (add, list, view)
+- Create and fill out inspections using templates
+- Responsive UI with **ShadCN** components
+- Data fetching and caching with **React Query**
+- Basic error handling
+
+## Tech Stack
+
+- **React** (UI library)
+- **Next.js** (SSR/SSG framework)
+- **React Query** (data fetching & caching)
+- **ShadCN** (UI components)
+- **Docker** & **Docker Compose**
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- [Node.js](https://nodejs.org/) (v18+ recommended)
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Local Development
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+#### Install dependencies
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+`npm install`
 
-## Learn More
+#### Start development server
 
-To learn more about Next.js, take a look at the following resources:
+`npm run dev`
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+> The app will be available at `http://localhost:3000`.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## App Structure
 
-## Deploy on Vercel
+- `/src/app`: Next.js routes
+- `/components`: Reusable UI components (ShadCN-based)
+- `/modules`: Modules for the business logic UI/UX
+- `/services`: API client logic
+- `/modules/hooks`: Custom hooks (e.g., for React Query)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## API Integration
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Expects the backend API to be running at `http://localhost:4000` (configurable)
+- Uses React Query for all data fetching and caching
+
+## Assumptions & Limitations
+
+- No authentication implemented (can be extended)
+- Only core flows implemented for demonstration
+- Write unit tests & cypress test
+- I18N for multiple languages
+- dockerize the Application
+
+## Author
+
+> Ravisankar Chinnam

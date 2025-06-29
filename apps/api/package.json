@@ -1,7 +1,7 @@
 {
-  "name": "inspection-app",
+  "name": "api",
   "version": "0.0.1",
-  "description": "",
+  "description": "A Node.js REST API for managing inspection templates, properties, and inspections, built with **NestJS** and **MongoDB**. This backend powers the Inspection App, enabling CRUD operations and business logic for inspection workflows.",
   "author": "",
   "private": true,
   "license": "UNLICENSED",

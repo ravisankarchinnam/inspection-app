@@ -1,7 +1,7 @@
 {
   "name": "inspection-app",
   "version": "0.1.0",
-  "description": "",
+  "description": "A responsive web application for inspection of properties or buildings based on the templates.",
   "scripts": {
     "dev": "turbo run dev",
     "build": "turbo run build",
