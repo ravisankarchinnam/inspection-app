@@ -17,6 +17,7 @@ export type FormSelectProps = {
   options: Option[];
   placeholder?: string;
   fullWidth?: boolean;
+  disabled?: boolean;
   onChange: (value: string) => void;
 };
 
@@ -28,6 +29,7 @@ export default function FormSelect({
   options,
   placeholder,
   fullWidth,
+  disabled = false,
 }: FormSelectProps) {
   return (
     <div className="flex flex-col gap-2">
@@ -35,6 +37,7 @@ export default function FormSelect({
       <Select
         value={value}
         onValueChange={(value: string) => onChange?.(value)}
+        disabled={disabled}
       >
         <SelectTrigger className={fullWidth ? "w-full" : ""}>
           <SelectValue placeholder={placeholder} />

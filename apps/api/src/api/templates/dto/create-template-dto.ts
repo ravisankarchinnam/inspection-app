@@ -12,6 +12,11 @@ import { ApiProperty } from '@nestjs/swagger';
 import { TemplateType } from '../enums/template-type.enum';
 
 export class QuestionDto {
+  @IsOptional()
+  @IsString()
+  @ApiProperty()
+  _id?: string;
+
   @IsString()
   @ApiProperty()
   text: string;

@@ -2,6 +2,7 @@ import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { Controller, Post, Get, Param, Body, Delete } from '@nestjs/common';
 import { TemplatesService } from './templates.service';
 import { CreateTemplateDto } from './dto/create-template-dto';
+import { UpdateTemplateDto } from './dto/update-template-dto';
 
 @Controller('templates')
 @ApiTags('templates')
@@ -38,5 +39,13 @@ export class TemplatesController {
   })
   remove(@Param('id') id: string) {
     return this.templatesService.remove(id);
+  }
+
+  @Post(':id')
+  @ApiOperation({
+    summary: 'updates the template by id',
+  })
+  update(@Param('id') id: string, @Body() dto: UpdateTemplateDto) {
+    return this.templatesService.update(id, dto);
   }
 }

@@ -6,14 +6,16 @@ import useDeleteTemplate from "@/modules/templates/hooks/useDeleteTemplate";
 import useGetTemplates from "@/modules/templates/hooks/useGetTemplates";
 import EmptyResults from "@/modules/templates/components/EmptyResults";
 import TemplateCard from "@/modules/templates/components/TemplateCard";
-import TemplateModal from "./components/TemplateModal";
+import TemplateModal from "@/modules/templates/components/TemplateModal";
+import { useUpdateTemplate } from "@/modules/templates/hooks/useUpdateTemplate";
 
 const TemplateContent = () => {
   const { data } = useGetTemplates();
-  const { mutate: create } = useCreateTemplate();
+  const { mutate: create, isPending: isCreateLoading } = useCreateTemplate();
+  const { mutate: update, isPending: isUpdateLoading } = useUpdateTemplate();
   const { mutate: remove } = useDeleteTemplate();
   const [templates, setTemplates] = useState<Template[]>([]);
-  const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [newTemplate, setNewTemplate] = useState<Template>({
     name: "",
     description: "",
@@ -38,8 +40,30 @@ const TemplateContent = () => {
 
     create(template);
     setNewTemplate({ name: "", description: "", questions: [] });
-    setIsCreateDialogOpen(false);
+    setIsDialogOpen(false);
     toast.success("Template created successfully");
+  };
+
+  const updateTemplate = () => {
+    if (!newTemplate?._id) {
+      toast.error("Template Id is required for update");
+      return;
+    }
+    if (!newTemplate?.name.trim()) {
+      toast.error("Template name is required");
+      return;
+    }
+    if (newTemplate?.questions?.length === 0) {
+      toast.error("At least one question is required");
+      return;
+    }
+    update({
+      _id: newTemplate._id,
+      questions: newTemplate.questions,
+    });
+    setNewTemplate({ name: "", description: "", questions: [] });
+    setIsDialogOpen(false);
+    toast.success("Template updated successfully");
   };
 
   const deleteTemplate = (id: string) => {
@@ -61,12 +85,14 @@ const TemplateContent = () => {
           </p>
         </div>
         <TemplateModal
-          isOpen={isCreateDialogOpen}
-          setIsOpen={setIsCreateDialogOpen}
+          isOpen={isDialogOpen}
+          setIsOpen={setIsDialogOpen}
           template={newTemplate}
           setNewTemplate={setNewTemplate}
           onSave={createTemplate}
-          onCancel={() => setIsCreateDialogOpen(false)}
+          onUpdate={updateTemplate}
+          onCancel={() => setIsDialogOpen(false)}
+          isLoading={isCreateLoading || isUpdateLoading}
         />
       </div>
 
@@ -76,12 +102,16 @@ const TemplateContent = () => {
             key={template._id}
             template={template}
             onDelete={() => deleteTemplate(template._id!)}
+            onEdit={() => {
+              setNewTemplate(template);
+              setIsDialogOpen(true);
+            }}
           />
         ))}
       </div>
 
       {templates.length === 0 && (
-        <EmptyResults onClick={() => setIsCreateDialogOpen(true)} />
+        <EmptyResults onClick={() => setIsDialogOpen(true)} />
       )}
     </div>
   );

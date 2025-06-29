@@ -17,14 +17,18 @@ export default function TemplateModal({
   isOpen,
   setIsOpen,
   onSave,
+  onUpdate,
   onCancel,
+  isLoading,
 }: {
   template: Template;
   setNewTemplate: Dispatch<SetStateAction<Template>>;
   isOpen: boolean;
   setIsOpen: Dispatch<SetStateAction<boolean>>;
   onSave: () => void;
+  onUpdate: () => void;
   onCancel: () => void;
+  isLoading?: boolean;
 }) {
   const [newQuestion, setNewQuestion] = useState<Question>({
     type: TemplateType.STRING,
@@ -101,12 +105,14 @@ export default function TemplateModal({
       title="Create New Template"
       description="Build a custom inspection template with various question types"
       saveButton={{
-        label: "Create Template",
-        onClick: onSave,
+        label: template._id ? "Update" : "Create",
+        onClick: template._id ? onUpdate : onSave,
+        disabled: isLoading,
       }}
       cancelButton={{
         label: "Cancel",
         onClick: onCancel,
+        disabled: isLoading,
       }}
     >
       <div className="space-y-6">
@@ -122,6 +128,7 @@ export default function TemplateModal({
               }))
             }
             placeholder="e.g., Safety Inspection"
+            disabled={!!template._id || isLoading}
           />
           <FormInput
             label="Description"
@@ -134,6 +141,7 @@ export default function TemplateModal({
               }))
             }
             placeholder="Brief description of this template"
+            disabled={!!template._id || isLoading}
           />
         </div>
 
@@ -161,6 +169,7 @@ export default function TemplateModal({
                   { label: "Single Choice", value: TemplateType.SINGLE },
                   { label: "Multiple Choice", value: TemplateType.MULTI },
                 ]}
+                disabled={isLoading}
               />
               <FormInput
                 label="Question Text"
@@ -173,6 +182,7 @@ export default function TemplateModal({
                   }))
                 }
                 placeholder="Enter your question"
+                disabled={isLoading}
               />
             </div>
 
@@ -189,19 +199,26 @@ export default function TemplateModal({
                           value={option}
                           onChange={(e) => updateOption(index, e.target.value)}
                           placeholder={`Option ${index + 1}`}
+                          disabled={isLoading}
                         />
                         {(newQuestion?.options?.length ?? 0) > 1 && (
                           <Button
                             variant="outline"
                             size="sm"
                             onClick={() => removeOption(index)}
+                            disabled={isLoading}
                           >
                             <Trash2 className="h-4 w-4" />
                           </Button>
                         )}
                       </div>
                     ))}
-                    <Button variant="outline" size="sm" onClick={addOption}>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={addOption}
+                      disabled={isLoading}
+                    >
                       <Plus className="h-4 w-4 mr-2" />
                       Add Option
                     </Button>
@@ -209,7 +226,11 @@ export default function TemplateModal({
                 </div>
               )}
 
-            <Button onClick={addQuestion} className="w-full">
+            <Button
+              onClick={addQuestion}
+              className="w-full"
+              disabled={isLoading}
+            >
               Add Question
             </Button>
           </CardContent>

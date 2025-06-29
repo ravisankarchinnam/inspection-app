@@ -1,6 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { TemplatesController } from './templates.controller';
 import { TemplatesService } from './templates.service';
+import { UpdateTemplateDto } from './dto/update-template-dto';
 
 describe('TemplatesController', () => {
   let controller: TemplatesController;
@@ -10,6 +11,7 @@ describe('TemplatesController', () => {
     findAll: jest.fn(),
     findOne: jest.fn(),
     remove: jest.fn(),
+    update: jest.fn(),
   };
 
   beforeEach(async () => {
@@ -53,5 +55,21 @@ describe('TemplatesController', () => {
     mockService.remove.mockResolvedValue(result);
     expect(await controller.remove('1')).toEqual(result);
     expect(mockService.remove).toHaveBeenCalledWith('1');
+  });
+
+  it('should call service.update with id and dto and return result', async () => {
+    const id = 'templateId1';
+    const dto = {
+      questions: [
+        { _id: 'q1', text: 'Question 1', type: 'STRING' },
+        { _id: 'q2', text: 'Question 2', type: 'STRING' },
+      ],
+    };
+    const result = { id, ...dto };
+    mockService.update.mockResolvedValue(result);
+    expect(await controller.update(id, dto as UpdateTemplateDto)).toEqual(
+      result,
+    );
+    expect(mockService.update).toHaveBeenCalledWith(id, dto);
   });
 });

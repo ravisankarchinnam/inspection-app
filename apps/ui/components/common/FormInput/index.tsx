@@ -8,6 +8,7 @@ export default function FormInput({
   onChange,
   name,
   placeholder,
+  disabled,
 }: { label: string } & React.ComponentProps<"input">) {
   return (
     <div className="flex flex-col gap-2">
@@ -17,6 +18,7 @@ export default function FormInput({
         value={value}
         onChange={onChange}
         placeholder={placeholder}
+        readOnly={disabled}
       />
     </div>
   );

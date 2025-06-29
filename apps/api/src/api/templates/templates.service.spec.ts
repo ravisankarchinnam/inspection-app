@@ -3,6 +3,7 @@ import { TemplatesService } from './templates.service';
 import { getModelToken } from '@nestjs/mongoose';
 import { NotFoundException } from '@nestjs/common';
 import { Model } from 'mongoose';
+import { TemplateType } from '../templates/enums/template-type.enum';
 
 type CreateTemplateDto = { name: string; questions: any[] };
 const mockTemplate = {
@@ -99,6 +100,84 @@ describe('TemplatesService', () => {
       expect(model.findByIdAndDelete).toHaveBeenCalledWith('templateId1');
       expect(execMock).toHaveBeenCalled();
       expect(result).toEqual(mockTemplate);
+    });
+  });
+  describe('update', () => {
+    const updateDto = {
+      questions: [
+        { _id: 'q1', text: 'Question 1', type: TemplateType.STRING },
+        { _id: 'q2', text: 'Question 2', type: TemplateType.STRING },
+      ],
+    };
+
+    beforeEach(() => {
+      // Ensure updateOne is always mocked for each test
+      (model.updateOne as jest.Mock) = jest.fn();
+    });
+
+    it('should throw NotFoundException if template does not exist', async () => {
+      const execMock = jest.fn().mockResolvedValue(null);
+      (model.findById as jest.Mock).mockReturnValue({ exec: execMock });
+
+      await expect(service.update('notfound', updateDto)).rejects.toThrow(
+        NotFoundException,
+      );
+      expect(model.findById).toHaveBeenCalledWith('notfound');
+      expect(execMock).toHaveBeenCalled();
+    });
+
+    it('should add new questions not present in template', async () => {
+      const tpl = {
+        _id: 'templateId1',
+        name: 'Test Template',
+        questions: [
+          { _id: 'q1', text: 'Question 1', type: TemplateType.STRING },
+        ],
+      };
+      const execMock = jest.fn().mockResolvedValue(tpl);
+      (model.findById as jest.Mock).mockReturnValue({ exec: execMock });
+
+      const updateOneMock = jest.fn().mockResolvedValue({});
+      (model.updateOne as jest.Mock) = updateOneMock;
+
+      await service.update('templateId1', updateDto);
+
+      expect(model.findById).toHaveBeenCalledWith('templateId1');
+      expect(execMock).toHaveBeenCalled();
+      expect(updateOneMock).toHaveBeenCalledWith(
+        { _id: 'templateId1' },
+        {
+          $push: {
+            questions: {
+              $each: [
+                { _id: 'q2', text: 'Question 2', type: TemplateType.STRING },
+              ],
+            },
+          },
+        },
+      );
+    });
+
+    it('should not call updateOne if all questions already exist', async () => {
+      const tpl = {
+        _id: 'templateId1',
+        name: 'Test Template',
+        questions: [
+          { _id: 'q1', text: 'Question 1', type: TemplateType.STRING },
+          { _id: 'q2', text: 'Question 2', type: TemplateType.STRING },
+        ],
+      };
+      const execMock = jest.fn().mockResolvedValue(tpl);
+      (model.findById as jest.Mock).mockReturnValue({ exec: execMock });
+
+      const updateOneMock = jest.fn();
+      (model.updateOne as jest.Mock) = updateOneMock;
+
+      await service.update('templateId1', updateDto);
+
+      expect(model.findById).toHaveBeenCalledWith('templateId1');
+      expect(execMock).toHaveBeenCalled();
+      expect(updateOneMock).not.toHaveBeenCalled();
     });
   });
 });

@@ -43,13 +43,15 @@ export default function QuestionsPreviewCard({
                     </div>
                   </div>
                 </div>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={() => onDelete(question)}
-                >
-                  <Trash2 className="h-4 w-4" />
-                </Button>
+                {!template?._id && (
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => onDelete(question)}
+                  >
+                    <Trash2 className="h-4 w-4" />
+                  </Button>
+                )}
               </div>
             );
           })}

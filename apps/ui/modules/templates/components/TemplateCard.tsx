@@ -19,9 +19,11 @@ import { formatDistanceToNow } from "date-fns";
 
 export default function TemplateCard({
   template,
+  onEdit,
   onDelete,
 }: {
   template: Template;
+  onEdit: () => void;
   onDelete: () => void;
 }) {
   const { _id, name, description, questions, createdAt } = template;
@@ -34,7 +36,7 @@ export default function TemplateCard({
             <CardDescription>{description}</CardDescription>
           </div>
           <div className="flex space-x-1">
-            <Button variant="ghost" size="sm">
+            <Button variant="ghost" size="sm" onClick={onEdit}>
               <Edit className="h-4 w-4" />
             </Button>
             <Button variant="ghost" size="sm" onClick={onDelete}>

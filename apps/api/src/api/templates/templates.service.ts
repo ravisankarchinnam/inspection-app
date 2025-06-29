@@ -3,6 +3,7 @@ import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 import { Template, TemplateDocument } from './schemas/template.schema';
 import { CreateTemplateDto } from 'src/api/templates/dto/create-template-dto';
+import { UpdateTemplateDto } from './dto/update-template-dto';
 
 @Injectable()
 export class TemplatesService {
@@ -26,5 +27,26 @@ export class TemplatesService {
 
   async remove(id: string) {
     return this.templateModel.findByIdAndDelete(id).exec();
+  }
+
+  async update(id: string, dto: UpdateTemplateDto) {
+    const tpl = await this.templateModel.findById(id).exec();
+    if (!tpl) {
+      throw new NotFoundException('Template not found');
+    }
+
+    const questionsToAdd = dto.questions.filter(
+      (q) =>
+        !tpl.questions.some(
+          (existingQ) => existingQ._id?.toString() === q._id?.toString(),
+        ),
+    );
+
+    if (questionsToAdd.length) {
+      await this.templateModel.updateOne(
+        { _id: id },
+        { $push: { questions: { $each: questionsToAdd } } },
+      );
+    }
   }
 }

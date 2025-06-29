@@ -22,10 +22,12 @@ type ModalProps = {
   saveButton: {
     label: string;
     onClick: () => void;
+    disabled?: boolean;
   };
   cancelButton: {
     label: string;
     onClick: () => void;
+    disabled?: boolean;
   };
 };
 
@@ -56,11 +58,19 @@ export default function Modal({
         {children}
         <DialogFooter>
           <DialogClose asChild>
-            <Button variant="outline" onClick={cancelButton.onClick}>
+            <Button
+              variant="outline"
+              onClick={cancelButton.onClick}
+              disabled={cancelButton.disabled}
+            >
               {cancelButton.label}
             </Button>
           </DialogClose>
-          <Button type="submit" onClick={saveButton.onClick}>
+          <Button
+            type="submit"
+            onClick={saveButton.onClick}
+            disabled={saveButton.disabled}
+          >
             {saveButton.label}
           </Button>
         </DialogFooter>
