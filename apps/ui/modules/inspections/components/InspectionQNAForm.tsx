@@ -120,7 +120,7 @@ function QNAElement({
     case TemplateType.SINGLE:
       return (
         <RadioGroup
-          value={field.value}
+          value={field.value as string}
           onValueChange={field.onChange}
           className="flex flex-col gap-2"
         >
@@ -137,7 +137,7 @@ function QNAElement({
 
     default:
       return (
-        <Select {...field}>
+        <Select {...field} value={field.value as string}>
           {options?.map((opt) => (
             <SelectItem key={opt} value={opt}>
               {opt}

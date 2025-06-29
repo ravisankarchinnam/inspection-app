@@ -13,6 +13,7 @@ export type Option = { label: string; value: string };
 export type FormSelectProps = {
   label: string;
   value: string;
+  name?: string;
   options: Option[];
   placeholder?: string;
   fullWidth?: boolean;
@@ -22,6 +23,7 @@ export type FormSelectProps = {
 export default function FormSelect({
   label,
   value,
+  name,
   onChange,
   options,
   placeholder,
@@ -34,7 +36,7 @@ export default function FormSelect({
         value={value}
         onValueChange={(value: string) => onChange?.(value)}
       >
-        <SelectTrigger className={fullWidth && "w-full"}>
+        <SelectTrigger className={fullWidth ? "w-full" : ""}>
           <SelectValue placeholder={placeholder} />
         </SelectTrigger>
         <SelectContent>
