@@ -27,42 +27,42 @@ export default function InspectionCard({
     <Card key={inspection._id} className="hover:shadow-md transition-shadow">
       <CardHeader>
         <div className="flex justify-between items-start">
-          <div className="flex items-start space-x-4">
-            <div className="p-2 bg-purple-100 rounded-lg">
-              <ClipboardList className="h-5 w-5 text-purple-600" />
-            </div>
-            <div>
-              <CardTitle className="flex items-center space-x-2">
+          <div className="flex flex-col items-start gap-2">
+            <div className="flex items-center space-x-4">
+              <div className="p-2 bg-purple-100 rounded-lg">
+                <ClipboardList className="h-5 w-5 text-purple-600" />
+              </div>
+              <CardTitle className="flex flex-col md:flex-row items-baseline md:items-center gap-2 md:gap-0 space-x-2">
                 <span>{inspection.templateName}</span>
                 <Badge
                   className={`text-xs ${getStatusColor(inspection.status)}`}
                 >
-                  {inspection.status?.replace("_", " ")}
+                  {inspection.status?.replace("_", " ")?.toLowerCase()}
                 </Badge>
               </CardTitle>
-              <CardDescription className="flex items-center space-x-4 mt-1">
-                <span className="flex items-center space-x-1">
-                  <Building className="h-3 w-3" />
-                  <span>{inspection.propertyName}</span>
-                </span>
-                {inspection.createdAt && (
-                  <span className="flex items-center space-x-1">
-                    <Calendar className="h-3 w-3" />
-                    <span>
-                      Created: {formatDistanceToNow(inspection.createdAt)}
-                    </span>
-                  </span>
-                )}
-                {inspection.updatedAt && (
-                  <span className="flex items-center space-x-1">
-                    <CheckCircle className="h-3 w-3" />
-                    <span>
-                      Completed: {formatDistanceToNow(inspection.updatedAt)}
-                    </span>
-                  </span>
-                )}
-              </CardDescription>
             </div>
+            <CardDescription className="flex flex-col md:flex-row items-start md:items-center gap-2 mt-1">
+              <span className="flex items-baseline md:items-center gap-1">
+                <Building className="h-3 w-3" />
+                <span>{inspection.propertyName}</span>
+              </span>
+              {inspection.createdAt && (
+                <span className="flex items-baseline md:items-center gap-1">
+                  <Calendar className="h-3 w-3" />
+                  <span>
+                    Created: {formatDistanceToNow(inspection.createdAt)}
+                  </span>
+                </span>
+              )}
+              {inspection.updatedAt && (
+                <span className="flex items-baseline md:items-center gap-1">
+                  <CheckCircle className="h-3 w-3" />
+                  <span>
+                    Completed: {formatDistanceToNow(inspection.updatedAt)}
+                  </span>
+                </span>
+              )}
+            </CardDescription>
           </div>
           <div className="flex items-center space-x-2">
             {getStatusIcon(inspection.status)}

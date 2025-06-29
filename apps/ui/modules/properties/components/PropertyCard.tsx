@@ -30,20 +30,14 @@ export default function PropertyCard({
   const { _id, name, address, createdAt } = property;
 
   return (
-    <Card key={_id} className="hover:shadow-lg transition-shadow">
+    <Card key={_id} className="hover:shadow-lg transition-shadow gap-3">
       <CardHeader>
         <div className="flex justify-between items-start">
-          <div className="flex items-start space-x-3">
+          <div className="flex items-center space-x-3">
             <div className="p-2 bg-blue-100 rounded-lg">
               <Building className="h-5 w-5 text-blue-600" />
             </div>
-            <div>
-              <CardTitle className="text-lg">{name}</CardTitle>
-              <CardDescription className="flex items-center space-x-1">
-                <MapPin className="h-3 w-3" />
-                <span>{formatAddress(address)}</span>
-              </CardDescription>
-            </div>
+            <CardTitle className="text-lg">{name}</CardTitle>
           </div>
           <div className="flex space-x-1">
             <Button variant="ghost" size="sm">
@@ -56,7 +50,13 @@ export default function PropertyCard({
         </div>
       </CardHeader>
       <CardContent>
-        <div className="space-y-3">
+        <div className="space-y-2">
+          <div>
+            <CardDescription className="flex items-baseline space-x-1">
+              <MapPin className="h-3 w-3" />
+              <span>{formatAddress(address)}</span>
+            </CardDescription>
+          </div>
           <div className="flex justify-between items-center">
             <span className="text-sm text-muted-foreground">Inspections</span>
             {/* <Badge

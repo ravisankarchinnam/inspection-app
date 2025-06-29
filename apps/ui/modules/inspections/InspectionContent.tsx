@@ -50,7 +50,7 @@ const InspectionManager = () => {
 
   return (
     <div className="space-y-6">
-      <div className="flex justify-between items-center">
+      <div className="flex flex-col md:flex-row items-end gap-2 justify-between md:items-center">
         <div>
           <h2 className="text-2xl font-bold">Inspection Management</h2>
           <p className="text-muted-foreground">
@@ -67,7 +67,6 @@ const InspectionManager = () => {
         />
       </div>
 
-      {/* Inspections List */}
       <div className="space-y-4">
         {inspections?.map((inspection) => (
           <InspectionCard
@@ -79,7 +78,6 @@ const InspectionManager = () => {
         ))}
       </div>
 
-      {/* View Inspection Dialog */}
       <InspectionQNAModal
         inspection={selectedInspection}
         isOpen={isViewDialogOpen}

@@ -25,7 +25,6 @@ const Dashboard = () => {
   const { data: properties } = useGetProperties();
   const { data: inspections } = useGetInspections();
 
-  // Mock data - in a real app this would come from an API
   const stats = {
     templates: templates?.length,
     properties: properties?.length,
@@ -41,7 +40,6 @@ const Dashboard = () => {
 
   return (
     <div className="space-y-6">
-      {/* Stats Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         <Card className="hover:shadow-lg transition-shadow">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
@@ -112,7 +110,6 @@ const Dashboard = () => {
         </Card>
       </div>
 
-      {/* Status Overview */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <Card>
           <CardHeader>
@@ -157,8 +154,8 @@ const Dashboard = () => {
                       activity.type === "inspection"
                         ? "bg-blue-100"
                         : activity.type === "template"
-                        ? "bg-green-100"
-                        : "bg-purple-100"
+                          ? "bg-green-100"
+                          : "bg-purple-100"
                     }`}
                   >
                     {activity.type === "inspection" && (
