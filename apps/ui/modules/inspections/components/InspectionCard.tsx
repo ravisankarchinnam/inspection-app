@@ -12,6 +12,7 @@ import {
 import { getStatusColor, getStatusIcon } from "@/modules/inspections/utils";
 import { Inspection, InspectionStatus } from "@/types/inspection";
 import { Building, Calendar, CheckCircle, ClipboardList } from "lucide-react";
+import { toast } from "sonner";
 
 export default function InspectionCard({
   inspection,
@@ -82,9 +83,14 @@ export default function InspectionCard({
               <Button
                 variant="outline"
                 size="sm"
-                onClick={() =>
-                  onUpdate(inspection._id!, InspectionStatus.IN_PROGRESS)
-                }
+                onClick={() => {
+                  if (!inspection.answers?.length) {
+                    toast.error("Please answer the questions first!");
+                    onView(inspection);
+                  } else {
+                    onUpdate(inspection._id!, InspectionStatus.IN_PROGRESS);
+                  }
+                }}
               >
                 Start Inspection
               </Button>
@@ -92,9 +98,14 @@ export default function InspectionCard({
             {inspection.status === InspectionStatus.IN_PROGRESS && (
               <Button
                 size="sm"
-                onClick={() =>
-                  onUpdate(inspection._id!, InspectionStatus.COMPLETED)
-                }
+                onClick={() => {
+                  if (!inspection.answers?.length) {
+                    toast.error("Please answer the questions first!");
+                    onView(inspection);
+                  } else {
+                    onUpdate(inspection._id!, InspectionStatus.COMPLETED);
+                  }
+                }}
               >
                 Mark Complete
               </Button>
