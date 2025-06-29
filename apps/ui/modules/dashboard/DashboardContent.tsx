@@ -175,9 +175,11 @@ const Dashboard = () => {
                     <p className="text-sm font-medium truncate">
                       {activity.item}
                     </p>
-                    <p className="text-xs text-muted-foreground">
-                      {activity.action} • {formatDistanceToNow(activity.time)}
-                    </p>
+                    {activity.time && (
+                      <p className="text-xs text-muted-foreground">
+                        {activity.action} • {formatDistanceToNow(activity.time)}
+                      </p>
+                    )}
                   </div>
                 </div>
               ))}
