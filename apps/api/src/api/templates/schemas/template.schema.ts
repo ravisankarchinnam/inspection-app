@@ -1,6 +1,6 @@
 import { HydratedDocument, Types } from 'mongoose';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { TemplateType } from 'src/api/templates/enums/template-type.enum';
+import { TemplateType } from '../enums/template-type.enum';
 
 export type TemplateDocument = HydratedDocument<Template>;
 

@@ -2,10 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 import { CreatePropertyDto } from 'src/api/properties/dto/create-property-dto';
-import {
-  Property,
-  PropertyDocument,
-} from 'src/api/properties/schemas/property.schema';
+import { Property, PropertyDocument } from './schemas/property.schema';
 
 @Injectable()
 export class PropertiesService {

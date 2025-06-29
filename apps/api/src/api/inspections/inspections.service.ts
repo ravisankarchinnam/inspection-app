@@ -5,18 +5,15 @@ import {
 } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import {
-  Inspection,
-  InspectionDocument,
-} from 'src/api/inspections/schemas/inspection.schema';
+import { Inspection, InspectionDocument } from './schemas/inspection.schema';
 import { CreateInspectionDto } from 'src/api/inspections/dto/create-inspection.dto';
 import {
   AnswerDto,
   UpdateInspectionDto,
 } from 'src/api/inspections/dto/update-inspection.dto';
-import { TemplatesService } from 'src/api/templates/templates.service';
-import { TemplateType } from 'src/api/templates/enums/template-type.enum';
-import { PropertiesService } from 'src/api/properties/properties.service';
+import { TemplatesService } from '../templates/templates.service';
+import { TemplateType } from '../templates/enums/template-type.enum';
+import { PropertiesService } from '../properties/properties.service';
 import { UpdateInspectionStatusDto } from './dto/update-inspection-status.dto';
 
 @Injectable()

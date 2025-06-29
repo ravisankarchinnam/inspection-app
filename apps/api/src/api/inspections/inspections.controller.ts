@@ -1,7 +1,7 @@
 import { Controller, Post, Get, Param, Body, Put, Patch } from '@nestjs/common';
-import { InspectionsService } from 'src/api/inspections/inspections.service';
-import { CreateInspectionDto } from 'src/api/inspections/dto/create-inspection.dto';
-import { UpdateInspectionDto } from 'src/api/inspections/dto/update-inspection.dto';
+import { InspectionsService } from './inspections.service';
+import { CreateInspectionDto } from './dto/create-inspection.dto';
+import { UpdateInspectionDto } from './dto/update-inspection.dto';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { UpdateInspectionStatusDto } from './dto/update-inspection-status.dto';
 

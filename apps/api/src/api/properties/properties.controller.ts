@@ -1,6 +1,6 @@
 import { Controller, Post, Get, Param, Body, Delete } from '@nestjs/common';
-import { PropertiesService } from 'src/api/properties/properties.service';
-import { CreatePropertyDto } from 'src/api/properties/dto/create-property-dto';
+import { PropertiesService } from './properties.service';
+import { CreatePropertyDto } from './dto/create-property-dto';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 
 @Controller('properties')

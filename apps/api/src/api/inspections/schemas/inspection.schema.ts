@@ -1,6 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument, Types } from 'mongoose';
-import { InspectionStatus } from 'src/api/inspections/enums/inspection-status.enum';
+import { InspectionStatus } from '../enums/inspection-status.enum';
 
 export type InspectionDocument = HydratedDocument<Inspection>;
 

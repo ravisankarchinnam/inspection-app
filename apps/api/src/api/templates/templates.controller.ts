@@ -1,7 +1,7 @@
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { Controller, Post, Get, Param, Body, Delete } from '@nestjs/common';
-import { TemplatesService } from 'src/api/templates/templates.service';
-import { CreateTemplateDto } from 'src/api/templates/dto/create-template-dto';
+import { TemplatesService } from './templates.service';
+import { CreateTemplateDto } from './dto/create-template-dto';
 
 @Controller('templates')
 @ApiTags('templates')

@@ -9,7 +9,7 @@ import {
 } from 'class-validator';
 import { Type } from 'class-transformer';
 import { ApiProperty } from '@nestjs/swagger';
-import { TemplateType } from 'src/api/templates/enums/template-type.enum';
+import { TemplateType } from '../enums/template-type.enum';
 
 export class QuestionDto {
   @IsString()
