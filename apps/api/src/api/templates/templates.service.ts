@@ -26,4 +26,8 @@ export class TemplatesService {
     if (!tpl) throw new NotFoundException('Template not found');
     return tpl;
   }
+
+  async remove(id: string) {
+    return this.templateModel.findByIdAndDelete(id).exec();
+  }
 }

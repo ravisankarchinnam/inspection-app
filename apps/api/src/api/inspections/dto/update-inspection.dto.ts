@@ -1,7 +1,17 @@
 import { Type } from 'class-transformer';
 import { ApiProperty } from '@nestjs/swagger';
-import { IsArray, ValidateNested } from 'class-validator';
-import { AnswerDto } from 'src/api/inspections/dto/create-inspection.dto';
+import { IsArray, IsNotEmpty, IsString, ValidateNested } from 'class-validator';
+
+export class AnswerDto {
+  @IsString()
+  @IsNotEmpty()
+  @ApiProperty()
+  questionId: string;
+
+  @IsNotEmpty()
+  @ApiProperty()
+  value: string | number | string[];
+}
 
 export class UpdateInspectionDto {
   @IsArray()

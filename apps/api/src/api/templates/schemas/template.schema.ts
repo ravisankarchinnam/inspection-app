@@ -10,6 +10,8 @@ export class Question {
 
   @Prop({ required: true }) text: string;
 
+  @Prop({ required: false }) isRequired?: boolean;
+
   @Prop({
     required: true,
     enum: TemplateType,
@@ -26,6 +28,9 @@ export const QuestionSchema = SchemaFactory.createForClass(Question);
 export class Template {
   @Prop({ required: true })
   name: string;
+
+  @Prop({ required: false })
+  description: string;
 
   @Prop({ type: [QuestionSchema], default: [] })
   questions: Question[];

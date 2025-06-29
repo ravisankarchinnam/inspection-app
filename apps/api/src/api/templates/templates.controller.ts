@@ -1,5 +1,5 @@
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
-import { Controller, Post, Get, Param, Body } from '@nestjs/common';
+import { Controller, Post, Get, Param, Body, Delete } from '@nestjs/common';
 import { TemplatesService } from 'src/api/templates/templates.service';
 import { CreateTemplateDto } from 'src/api/templates/dto/create-template-dto';
 
@@ -30,5 +30,13 @@ export class TemplatesController {
   })
   findOne(@Param('id') id: string) {
     return this.templatesService.findOne(id);
+  }
+
+  @Delete(':id')
+  @ApiOperation({
+    summary: 'deletes the template by id',
+  })
+  remove(@Param('id') id: string) {
+    return this.templatesService.remove(id);
   }
 }

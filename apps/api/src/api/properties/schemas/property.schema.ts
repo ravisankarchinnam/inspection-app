@@ -3,7 +3,7 @@ import { HydratedDocument } from 'mongoose';
 
 export type PropertyDocument = HydratedDocument<Property>;
 
-@Schema({ timestamps: true })
+@Schema({ _id: true, timestamps: true })
 export class Address {
   @Prop({ required: true })
   street: string;
@@ -20,7 +20,7 @@ export class Address {
 
 export const AddressSchema = SchemaFactory.createForClass(Address);
 
-@Schema({ timestamps: true })
+@Schema({ _id: true, timestamps: true })
 export class Property {
   @Prop({ required: true })
   name: string;

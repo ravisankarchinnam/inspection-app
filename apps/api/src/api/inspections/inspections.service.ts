@@ -5,11 +5,19 @@ import {
 } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { Inspection, InspectionDocument } from './schemas/inspection.schema';
-import { AnswerDto, CreateInspectionDto } from './dto/create-inspection.dto';
-import { UpdateInspectionDto } from './dto/update-inspection.dto';
-import { TemplatesService } from '../templates/templates.service';
-import { TemplateType } from '../templates/enums/template-type.enum';
+import {
+  Inspection,
+  InspectionDocument,
+} from 'src/api/inspections/schemas/inspection.schema';
+import { CreateInspectionDto } from 'src/api/inspections/dto/create-inspection.dto';
+import {
+  AnswerDto,
+  UpdateInspectionDto,
+} from 'src/api/inspections/dto/update-inspection.dto';
+import { TemplatesService } from 'src/api/templates/templates.service';
+import { TemplateType } from 'src/api/templates/enums/template-type.enum';
+import { PropertiesService } from 'src/api/properties/properties.service';
+import { UpdateInspectionStatusDto } from './dto/update-inspection-status.dto';
 
 @Injectable()
 export class InspectionsService {
@@ -17,6 +25,7 @@ export class InspectionsService {
     @InjectModel(Inspection.name)
     private inspectionModel: Model<InspectionDocument>,
     private readonly templatesService: TemplatesService,
+    private readonly propertiesService: PropertiesService,
   ) {}
 
   private async validateAnswers(templateId: string, answers?: AnswerDto[]) {
@@ -95,12 +104,14 @@ export class InspectionsService {
     }
   }
 
-  async create(createInspectionDto: CreateInspectionDto): Promise<Inspection> {
-    await this.validateAnswers(
-      createInspectionDto.templateId,
-      createInspectionDto.answers,
-    );
-    return this.inspectionModel.create(createInspectionDto);
+  async create(dto: CreateInspectionDto): Promise<Inspection> {
+    const template = await this.templatesService.findOne(dto.templateId);
+    if (!template) throw new BadRequestException('Invalid templateId');
+
+    const property = await this.propertiesService.findOne(dto.propertyId);
+    if (!property) throw new BadRequestException('Invalid propertyId');
+
+    return this.inspectionModel.create(dto);
   }
 
   async findAll(): Promise<Inspection[]> {
@@ -113,10 +124,7 @@ export class InspectionsService {
     return inspection;
   }
 
-  async update(
-    id: string,
-    updateInspectionDto: UpdateInspectionDto,
-  ): Promise<Inspection> {
+  async update(id: string, updateInspectionDto: UpdateInspectionDto) {
     const inspection = await this.findOne(id);
 
     if (updateInspectionDto.answers) {
@@ -126,17 +134,32 @@ export class InspectionsService {
       );
     }
 
-    const updatedInspection = await this.inspectionModel
-      .findByIdAndUpdate(
-        id,
-        { answers: updateInspectionDto.answers },
-        { new: true },
-      )
-      .exec();
+    const updatedInspection = await this.inspectionModel.findByIdAndUpdate(
+      id,
+      {
+        answers: updateInspectionDto.answers,
+      },
+      { upsert: true },
+    );
 
     if (!updatedInspection)
       throw new NotFoundException('Update Inspection failed');
 
     return updatedInspection;
+  }
+
+  async updateStatus(
+    id: string,
+    dto: UpdateInspectionStatusDto,
+  ): Promise<Inspection> {
+    const inspection = await this.inspectionModel.findByIdAndUpdate(
+      id,
+      { status: dto.status },
+      { new: true },
+    );
+    if (!inspection) {
+      throw new NotFoundException('Inspection not found');
+    }
+    return inspection;
   }
 }

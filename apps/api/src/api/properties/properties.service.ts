@@ -27,4 +27,8 @@ export class PropertiesService {
     if (!obj) throw new NotFoundException('Property not found');
     return obj;
   }
+
+  async remove(id: string) {
+    return this.propertyModel.findByIdAndDelete(id).exec();
+  }
 }

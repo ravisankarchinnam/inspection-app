@@ -5,6 +5,7 @@ import {
   ValidateNested,
   IsEnum,
   IsOptional,
+  IsBoolean,
 } from 'class-validator';
 import { Type } from 'class-transformer';
 import { ApiProperty } from '@nestjs/swagger';
@@ -20,6 +21,11 @@ export class QuestionDto {
   type: TemplateType;
 
   @IsOptional()
+  @IsBoolean()
+  @ApiProperty()
+  isRequired?: boolean;
+
+  @IsOptional()
   @IsArray()
   @ApiProperty({ required: false })
   options?: string[];
@@ -29,6 +35,11 @@ export class CreateTemplateDto {
   @IsString()
   @ApiProperty()
   name: string;
+
+  @IsOptional()
+  @IsString()
+  @ApiProperty()
+  description?: string;
 
   @IsArray()
   @ArrayMinSize(1)
